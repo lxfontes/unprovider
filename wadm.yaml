@@ -1,0 +1,37 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: unprovider
+  annotations:
+    description: "An application with a provider and component built for extending wasmCloud with custom capabilities"
+    wasmcloud.dev/authors: wasmCloud team
+    wasmcloud.dev/source-url: https://github.com/wasmCloud/wasmCloud/blob/main/examples/golang/providers/custom-template/wadm.yaml
+    wasmcloud.dev/readme-md-url: https://github.com/wasmCloud/wasmCloud/blob/main/examples/golang/providers/custom-template/README.md
+    wasmcloud.dev/homepage: https://github.com/wasmCloud/wasmCloud/tree/main/examples/golang/providers/custom-template
+    wasmcloud.dev/categories: |
+      capability-provider,provider,template,http-server,tinygo,golang,example
+spec:
+  components:
+    - name: caller
+      type: component
+      properties:
+        image: file://./test-component/build/unprovider_example_s.wasm
+      traits:
+        - type: spreadscaler
+          properties:
+            instances: 1
+        - type: link
+          properties:
+            target: provider
+            namespace: lxfontes
+            package: unprovider
+            interfaces: [runner]
+
+    - name: provider
+      type: capability
+      properties:
+        image: file://./build/unprovider.par.gz
+        config:
+          - name: provider_config
+            properties:
+              command: "jq ."

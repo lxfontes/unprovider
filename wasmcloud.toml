@@ -1,0 +1,8 @@
+name = "Unprovider"
+language = "go"
+type = "provider"
+version = "0.1.0"
+
+[provider]
+bin_name = "unprovider"
+vendor = "wasmCloud"

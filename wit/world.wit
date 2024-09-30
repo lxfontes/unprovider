@@ -1,0 +1,9 @@
+package lxfontes:unprovider;
+
+interface runner {
+  call: func(input:string) -> result<string, string>;
+}
+
+world server {
+  export runner;
+}

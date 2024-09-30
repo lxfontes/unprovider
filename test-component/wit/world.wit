@@ -1,0 +1,14 @@
+package lxfontes:unprovider-example;
+
+interface caller {
+  call: func() -> string;
+}
+
+world client {
+  // tinygo
+  include wasi:cli/imports@0.2.0;
+
+  import lxfontes:unprovider/runner;
+
+  export caller;
+}
